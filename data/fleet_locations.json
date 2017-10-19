@@ -1,0 +1,98 @@
+[
+  {
+    "driver": "Budi",
+    "type": "gojek",
+    "location": [
+      40,
+      5
+    ]
+  },
+  {
+    "driver": "Andi",
+    "type": "gojek",
+    "location": [
+      10,
+      1
+    ]
+  },
+  {
+    "driver": "Indro",
+    "type": "gojek",
+    "location": [
+      40,
+      2
+    ]
+  },
+  {
+    "driver": "Rokhim",
+    "type": "gojek",
+    "location": [
+      20,
+      35
+    ]
+  },
+  {
+    "driver": "Syukur",
+    "type": "gojek",
+    "location": [
+      10,
+      15
+    ]
+  },
+  {
+    "driver": "Anna",
+    "type": "gojek",
+    "location": [
+      20,
+      5
+    ]
+  },
+  {
+    "driver": "Budiono",
+    "type": "gocar",
+    "location": [
+      15,
+      35
+    ]
+  },
+  {
+    "driver": "Andiono",
+    "type": "gocar",
+    "location": [
+      10,
+      1
+    ]
+  },
+  {
+    "driver": "Indrono",
+    "type": "gocar",
+    "location": [
+      40,
+      2
+    ]
+  },
+  {
+    "driver": "Rokhimono",
+    "type": "gocar",
+    "location": [
+      40,
+      5
+    ]
+  },
+  {
+    "driver": "Syukurono",
+    "type": "gocar",
+    "location": [
+      10,
+      15
+    ]
+  },
+  {
+    "driver": "Annaono",
+    "type": "gocar",
+    "location": [
+      20,
+      5
+    ]
+  }
+]
