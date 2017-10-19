@@ -1,0 +1,12 @@
+[
+  {
+    "code": "GOPER",
+    "type": "percentage",
+    "value": 25
+  },
+  {
+    "code": "GODIR",
+    "type": "cash",
+    "value": 1500
+  }
+]
