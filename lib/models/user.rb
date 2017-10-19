@@ -12,7 +12,7 @@ module GoCLI
       @email = opts[:email] || ''
       @phone = opts[:phone] || ''
       @password = opts[:password] || ''
-      @gopay = 0
+      @gopay = opts[:gopay] || 0
     end
 
     def self.load
@@ -20,7 +20,6 @@ module GoCLI
 
       file = File.read("#{File.expand_path(File.dirname(__FILE__))}/../../data/user.json")
       data = JSON.parse(file)
-
       self.new(
         name:     data['name'],
         email:    data['email'],

@@ -29,7 +29,8 @@ module GoCLI
           name:    form[:name],
           email:    form[:email],
           phone:    form[:phone],
-          password: form[:password]
+          password: form[:password],
+          gopay:    form[:gopay]
         )
         user.save!
         # Assigning form[:user] with user object

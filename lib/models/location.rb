@@ -38,7 +38,7 @@ module GoCLI
         form[:destination_coord] = hash['coord'] if hash['name'] == form[:destination]
       end
 
-      (form.has_key? :origin_coord) && (form.has_key? :destination_coord)
+      (form.has_key? :origin_coord) && (form.has_key? :destination_coord) && form[:origin] != form[:destination]
     end
 
     def self.length(origin, destination)
