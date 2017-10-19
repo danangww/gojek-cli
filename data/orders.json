@@ -1,86 +1,57 @@
 [
   {
-    "timestamp": "2017-10-19 10:53:43 +0700",
-    "origin": "blok m",
-    "destination": "kemang",
+    "timestamp": "2017-10-19 20:06:16 +0700",
+    "origin": "kemang",
+    "destination": "blok m",
     "est_price": 7500,
     "driver": "Rokhim",
-    "type": "gojek"
-  },
-  {
-    "timestamp": "2017-10-19 10:55:46 +0700",
-    "origin": "sunter",
-    "destination": "blok m",
-    "est_price": 97628,
-    "driver": "Budiono",
-    "type": "gocar"
-  },
-  {
-    "timestamp": "2017-10-19 12:37:31 +0700",
-    "origin": "taman anggrek",
-    "destination": "sunter",
-    "est_price": 79057,
-    "driver": "Syukurono",
-    "type": "gocar"
-  },
-  {
-    "timestamp": "2017-10-19 13:09:17 +0700",
-    "origin": "kemang",
-    "destination": "kemang",
-    "est_price": 0,
-    "driver": "Rokhim",
-    "type": "gojek"
-  },
-  {
-    "timestamp": "2017-10-19 13:54:49 +0700",
-    "origin": "sunter",
-    "destination": "menteng",
-    "est_price": 37500,
-    "driver": "Budi",
-    "type": "gojek"
-  },
-  {
-    "timestamp": "2017-10-19 13:55:07 +0700",
-    "origin": "sunter",
-    "destination": "menteng",
-    "est_price": 62500,
-    "driver": "Rokhimono",
-    "type": "gocar"
-  },
-  {
-    "timestamp": "2017-10-19 16:10:50 +0700",
-    "origin": "sunter",
-    "destination": "blok m",
-    "est_price": 97628,
-    "driver": "Syukurono",
-    "type": "gocar",
-    "payment_method": "cash"
-  },
-  {
-    "timestamp": "2017-10-19 16:14:45 +0700",
-    "origin": "blok m",
-    "destination": "kemang",
-    "est_price": 12500,
-    "driver": "Budiono",
-    "type": "gocar",
-    "payment_method": "gopay"
-  },
-  {
-    "timestamp": "2017-10-19 16:16:54 +0700",
-    "origin": "taman anggrek",
-    "destination": "blok m",
-    "est_price": 30923,
-    "driver": "Syukur",
     "type": "gojek",
-    "payment_method": "cash"
+    "payment_method": "cash",
+    "promo_code": "-",
+    "discount": 0
   },
   {
-    "timestamp": "2017-10-19 16:17:20 +0700",
+    "timestamp": "2017-10-19 20:15:40 +0700",
     "origin": "blok m",
-    "destination": "taman anggrek",
-    "est_price": 51539,
-    "driver": "Syukurono",
+    "destination": "kemang",
+    "est_price": 5625,
+    "driver": "Rokhim",
+    "type": "gojek",
+    "payment_method": "cash",
+    "promo_code": "GOPER",
+    "discount": 1875.0
+  },
+  {
+    "timestamp": "2017-10-19 20:39:57 +0700",
+    "origin": "blok m",
+    "destination": "sunter",
+    "est_price": 97628,
+    "driver": "Budiono",
     "type": "gocar",
-    "payment_method": "gopay"
+    "payment_method": "cash",
+    "promo_code": "-",
+    "discount": 0
+  },
+  {
+    "timestamp": "2017-10-19 20:49:33 +0700",
+    "origin": "menteng",
+    "destination": "kemang",
+    "est_price": 23758,
+    "driver": "Rokhimono",
+    "type": "gocar",
+    "payment_method": "cash",
+    "promo_code": "GOPER",
+    "discount": 4192.75
+  },
+  {
+    "timestamp": "2017-10-19 20:52:37 +0700",
+    "origin": "kemang",
+    "destination": "blok m",
+    "est_price": 6000,
+    "driver": "Rokhim",
+    "type": "gojek",
+    "payment_method": "cash",
+    "promo_code": "GODIR",
+    "discount": 1500
   }
 ]

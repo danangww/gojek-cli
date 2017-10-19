@@ -57,7 +57,8 @@ module GoCLI
       puts '2. Order Go-Ride'
       puts '3. View Order History'
       puts '4. Your GoPay'
-      puts '5. Exit'
+      puts '5. Go-Ride Promo'
+      puts '6. Exit'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -128,10 +129,12 @@ module GoCLI
       puts ''
 
       print 'Your position: '
-      form[:origin] = gets.chomp
+      form[:origin] = gets.chomp.downcase
 
       print 'Your destination: '
-      form[:destination] = gets.chomp
+      form[:destination] = gets.chomp.downcase
+
+      form[:steps] << { id: __method__ }
 
       form
     end
@@ -148,12 +151,21 @@ module GoCLI
       print "Tujuan \t\t: #{form[:destination]}\n"
       print "Panjang Rute \t: #{form[:length]}\n"
       print "Harga Gojek \t: #{form[:est_price_gojek]}\n"
-      print "Harga Gocar \t: #{form[:est_price_gocar]}\n\n"
+      print "Harga Gocar \t: #{form[:est_price_gocar]}\n"
 
-      puts "1. Pesan Gojek (Harga : #{form[:est_price_gojek]})"
-      puts "2. Pesan Gocar (Harga : #{form[:est_price_gocar]})"
-      puts '3. Ulangi'
-      puts '4. Kembali ke menu awal'
+      if form.key? :discount
+        print "\nPromo Code \t\t: #{form[:promo_code]}\n"
+        print "Promo Type \t\t: #{form[:promo_type]}\n"
+        print "Promo Value \t\t: #{form[:promo_value]} #{form[:promo_type] == 'percentage' ? '%' : ''}\n"
+        print "Harga Gojek Promo \t: #{form[:promo_gojek]}\n"
+        print "Harga Gocar Promo \t: #{form[:promo_gocar]}\n"
+      end
+
+      puts "\n1. Pesan Gojek (Harga : #{(form.key? :promo_gojek) ? form[:promo_gojek] : form[:est_price_gojek]})"
+      puts "2. Pesan Gocar (Harga : #{(form.key? :promo_gocar) ? form[:promo_gocar] : form[:est_price_gocar]})"
+      puts '3. Masukkan kode promo / voucher'
+      puts '4. Ulangi'
+      puts '5. Kembali ke menu awal'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -173,7 +185,15 @@ module GoCLI
       print "Harga Gojek \t: #{form[:est_price_gojek]}\n"
       print "Harga Gocar \t: #{form[:est_price_gocar]}\n\n"
 
-      puts '1. Ulangi Pemilihan Rute'
+      if form.key? :discount
+        print "\nPromo Code \t\t: #{form[:promo_code]}\n"
+        print "Promo Type \t\t: #{form[:promo_type]}\n"
+        print "Promo Value \t\t: #{form[:promo_value]} #{form[:promo_type] == 'percentage' ? '%' : ''}\n"
+        print "Harga Gojek Promo \t: #{form[:promo_gojek]}\n"
+        print "Harga Gocar Promo \t: #{form[:promo_gocar]}\n"
+      end
+
+      puts "\n1. Ulangi Pemilihan Rute"
       puts '2. Kembali ke menu awal'
 
       print 'Enter your option: '
@@ -204,6 +224,20 @@ module GoCLI
       form
     end
 
+    def self.order_promo(opts = {})
+      form = opts
+
+      puts 'Promo / Voucher Code'
+      puts ''
+
+      print 'Promo code: '
+      form[:promo_code] = gets.chomp
+
+      form[:steps] << { id: __method__ }
+
+      form
+    end
+
     # TODO: Complete view_order_history method
     def self.view_order_history(opts = {})
       form = opts
@@ -217,9 +251,32 @@ module GoCLI
         puts "Asal \t\t: #{order['origin']}"
         puts "Tujuan \t\t: #{order['destination']}"
         puts "Harga \t\t: #{order['est_price']}"
+        puts "Promo Code \t: #{order['promo_code']}"
+        puts "Discount \t: #{order['discount']}"
         puts "Payment \t: #{order['payment_method']}"
         puts "Armada \t\t: #{order['type']}"
         puts "Driver \t\t: #{order['driver']}\n\n"
+      end
+
+      puts "\n1. Back"
+
+      print 'Enter your option: '
+      form[:steps] << { id: __method__, option: gets.chomp }
+
+      form
+    end
+
+    def self.view_promo(opts = {})
+      form = opts
+
+      puts 'View Promo'
+      puts ''
+
+      Promo.load.each_with_index do |promo, index|
+        puts "##{index + 1}"
+        puts "Code \t: #{promo['code']}"
+        puts "Type \t: #{promo['type']}"
+        puts "Value \t: #{promo['value']}#{(promo['type'] == 'percentage') ? '%' : ''}\n\n"
       end
 
       puts "\n1. Back"

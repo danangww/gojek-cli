@@ -17,8 +17,8 @@ module GoCLI
 
     def self.check(opts = {})
       form = opts
-      form.delete(:ori_coord)
-      form.delete(:dest_coord)
+      form.delete(:ori_coord) if form.key? :ori_coord
+      form.delete(:dest_coord) if form.key? :dest_coord
 
       load.each do |hash|
         form[:ori_coord] = hash['coord'] if hash['name'] == form[:origin]

@@ -3,6 +3,7 @@
 require_relative './models/user'
 require_relative './models/order'
 require_relative './models/location'
+require_relative './models/promo'
 require_relative './view'
 
 module GoCLI
@@ -71,6 +72,8 @@ module GoCLI
       when 4
         view_gopay(form)
       when 5
+        view_promo(form)
+      when 6
         exit(true)
       else
         form[:flash_msg] = 'Wrong option entered, please retry.'
@@ -147,13 +150,18 @@ module GoCLI
       form[:length] = Location.length(form[:ori_coord], form[:dest_coord])
       form[:est_price_gojek] = (form[:length] * 1500).round
       form[:est_price_gocar] = (form[:length] * 2500).round
+      
+      # reset promo code from order_goride
+      if form[:steps].last[:id] == :order_goride
+        form = Promo.reset(form)
+      end
 
       form = View.order_goride_confirm(form)
 
       case form[:steps].last[:option].to_i
       when 1
         form[:type] = 'gojek'
-        form[:est_price] = opts[:est_price_gojek]
+        form[:est_price] = (form.key? :promo_gojek) ? form[:promo_gojek] : form[:est_price_gojek]
 
         drivers = Order.check_fleet(form)
         # p drivers.first
@@ -168,7 +176,7 @@ module GoCLI
         end
       when 2
         form[:type] = 'gocar'
-        form[:est_price] = opts[:est_price_gocar]
+        form[:est_price] = (form.key? :promo_gocar) ? form[:promo_gocar] : form[:est_price_gocar]
 
         drivers = Order.check_fleet(form)
         # p drivers.first
@@ -178,12 +186,31 @@ module GoCLI
           
           order_payment_confirm(form)
         else
-          form[:flash_msg] = 'Sorry, we can not find you a gojek driver. You may try using gocar.'
+          form[:flash_msg] = 'Sorry, we can not find you a gocar driver. You may try using gojek.'
           order_get_no_driver(form)
         end
       when 3
-        order_goride(form)
+        clear_screen(opts)
+        form = View.order_promo(form)
+        form = Promo.check(form)
+        
+        if form.key? :promo_value
+          if form[:promo_type] == 'percentage'
+            form[:discount] = form[:est_price_gojek] * (form[:promo_value]/100.to_f)
+            form[:promo_gojek] = form[:est_price_gojek] - form[:discount].round
+            form[:promo_gocar] = form[:est_price_gocar] - form[:discount].round
+          else
+            form[:discount] = form[:promo_value]
+            form[:promo_gojek] = form[:est_price_gojek] - form[:discount]
+            form[:promo_gocar] = form[:est_price_gocar] - form[:discount]
+          end
+        else
+          form[:flash_msg] = 'Promo / voucher code not found.'
+        end
+        order_goride_confirm(form)
       when 4
+        order_goride(form)
+      when 5
         main_menu(form)
       else
         form[:flash_msg] = 'Wrong option entered, please retry.'
@@ -252,6 +279,19 @@ module GoCLI
       else
         form[:flash_msg] = 'Wrong option entered, please retry.'
         view_order_history(form)
+      end
+    end
+
+    def view_promo(opts = {})
+      clear_screen(opts)
+      form = View.view_promo(opts)
+
+      case form[:steps].last[:option].to_i
+      when 1
+        main_menu(form)
+      else
+        form[:flash_msg] = 'Wrong option entered, please retry.'
+        view_promo(form)
       end
     end
 

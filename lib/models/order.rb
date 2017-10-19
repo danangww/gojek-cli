@@ -6,7 +6,8 @@ require 'date'
 module GoCLI
   # Order class for accessing, checking, and writing to orders.json file containing user orders history
   class Order
-    attr_accessor :timestamp, :origin, :destination, :ori_coord, :dest_coord, :est_price, :driver, :type, :payment_method
+    attr_accessor :timestamp, :origin, :destination, :ori_coord, :dest_coord
+    attr_accessor :est_price, :driver, :type, :payment_method, :promo_code, :discount
 
     def initialize(opts = {})
       @timestamp = Time.new
@@ -18,6 +19,8 @@ module GoCLI
       @driver = opts[:driver]
       @type = opts[:type]
       @payment_method = opts[:payment_method]
+      @promo_code = opts[:promo_code] || '-'
+      @discount = opts[:discount].round || 0
     end
 
     def self.load
@@ -31,7 +34,7 @@ module GoCLI
 
     def save!
       data = Order.load
-      order = { timestamp: @timestamp, origin: @origin, destination: @destination, est_price: @est_price, driver: @driver, type: @type, payment_method: @payment_method }
+      order = { timestamp: @timestamp, origin: @origin, destination: @destination, est_price: @est_price, driver: @driver, type: @type, payment_method: @payment_method, promo_code: @promo_code, discount: @discount }
       data << order
       File.open("#{File.expand_path(__dir__)}/../../data/orders.json", 'w') do |f|
         f.write JSON.pretty_generate(data)
