@@ -54,7 +54,7 @@ module GoCLI
       puts '1. View Profile'
       puts '2. Order Go-Ride'
       puts '3. View Order History'
-      puts '4. Top Up GoPay'
+      puts '4. Your GoPay'
       puts '5. Exit'
 
       print 'Enter your option: '

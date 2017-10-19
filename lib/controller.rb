@@ -72,7 +72,7 @@ module GoCLI
         # Step 4.3
         view_order_history(form)
       when 4
-        top_up_gopay(form)
+        view_gopay(form)
       when 5
         exit(true)
       else
@@ -235,6 +235,9 @@ module GoCLI
         top_up_gopay(form)
       when 2
         main_menu(form)
+      else
+        form[:flash_msg] = "Wrong option entered, please retry."
+        view_gopay(form)
       end
     end
 
@@ -249,7 +252,13 @@ module GoCLI
           form[:flash_msg] = valid_msg
           view_gopay(form)
         else
-
+          user = User.load
+          user.topup_gopay(form[:gopay_topup])
+          user.save!
+          form[:user] = user
+          form.delete(:gopay_topup)
+          form[:flash_msg] = "Top Up GoPay success!"
+          view_gopay(form)
         end
       when 2
         form.delete(:gopay_topup)
