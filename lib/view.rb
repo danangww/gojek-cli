@@ -182,6 +182,28 @@ module GoCLI
       form
     end
 
+    def self.order_payment_confirm(opts = {})
+      form = opts
+
+      puts 'Order Payment Confirmation'
+      puts ''
+
+      print "Asal \t\t: #{form[:origin]}\n"
+      print "Tujuan \t\t: #{form[:destination]}\n"
+      print "Panjang Rute \t: #{form[:length]}\n"
+      print "Armada \t\t: #{form[:type]}\n"
+      print "Harga \t\t: #{form[:est_price]}\n\n"
+
+      puts "1. Via GoPay (Balance : #{form[:user].gopay})"
+      puts "2. Cash / Tunai"
+      puts '3. Cancel Order'
+
+      print 'Enter your option: '
+      form[:steps] << { id: __method__, option: gets.chomp }
+
+      form
+    end
+
     # TODO: Complete view_order_history method
     def self.view_order_history(opts = {})
       form = opts
@@ -195,6 +217,7 @@ module GoCLI
         puts "Asal \t\t: #{order['origin']}"
         puts "Tujuan \t\t: #{order['destination']}"
         puts "Harga \t\t: #{order['est_price']}"
+        puts "Payment \t: #{order['payment_method']}"
         puts "Armada \t\t: #{order['type']}"
         puts "Driver \t\t: #{order['driver']}\n\n"
       end

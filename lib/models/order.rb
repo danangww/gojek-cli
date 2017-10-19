@@ -6,7 +6,7 @@ require 'date'
 module GoCLI
   # Order class for accessing, checking, and writing to orders.json file containing user orders history
   class Order
-    attr_accessor :timestamp, :origin, :destination, :ori_coord, :dest_coord, :est_price, :driver, :type
+    attr_accessor :timestamp, :origin, :destination, :ori_coord, :dest_coord, :est_price, :driver, :type, :payment_method
 
     def initialize(opts = {})
       @timestamp = Time.new
@@ -14,9 +14,10 @@ module GoCLI
       @destination = opts[:destination]
       @ori_coord = opts[:ori_coord]
       @dest_coord = opts[:dest_coord]
-      @est_price = opts[:type] == 'gojek' ? opts[:est_price_gojek] : opts[:est_price_gocar]
+      @est_price = opts[:est_price]
       @driver = opts[:driver]
       @type = opts[:type]
+      @payment_method = opts[:payment_method]
     end
 
     def self.load
@@ -30,12 +31,12 @@ module GoCLI
 
     def save!
       data = Order.load
-      order = { timestamp: @timestamp, origin: @origin, destination: @destination, est_price: @est_price, driver: @driver, type: @type }
+      order = { timestamp: @timestamp, origin: @origin, destination: @destination, est_price: @est_price, driver: @driver, type: @type, payment_method: @payment_method }
       data << order
       File.open("#{File.expand_path(__dir__)}/../../data/orders.json", 'w') do |f|
         f.write JSON.pretty_generate(data)
       end
-
+      
       # update driver location
       update_driver_location
     end
