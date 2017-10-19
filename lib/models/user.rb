@@ -35,6 +35,10 @@ module GoCLI
       @gopay += amount.to_i
     end
 
+    def debet_gopay(amount)
+      @gopay -= amount.to_i
+    end
+
     # TODO: Add your validation method here
     def self.validate(opts = {})
       form = opts

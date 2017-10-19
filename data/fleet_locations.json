@@ -35,8 +35,8 @@
     "driver": "Syukur",
     "type": "gojek",
     "location": [
-      10,
-      15
+      15,
+      35
     ]
   },
   {
@@ -51,7 +51,7 @@
     "driver": "Budiono",
     "type": "gocar",
     "location": [
-      15,
+      20,
       35
     ]
   },
@@ -83,8 +83,8 @@
     "driver": "Syukurono",
     "type": "gocar",
     "location": [
-      40,
-      5
+      10,
+      15
     ]
   },
   {

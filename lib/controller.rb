@@ -153,30 +153,32 @@ module GoCLI
       case form[:steps].last[:option].to_i
       when 1
         form[:type] = 'gojek'
+        form[:est_price] = opts[:est_price_gojek]
+
         drivers = Order.check_fleet(form)
         # p drivers.first
         if !drivers.empty?
           form[:driver] = drivers.first['driver']
-          order = Order.new(form)
-          order.save!
-          form[:flash_msg] = "You order has been saved. Wait for #{form[:driver]} to pick you up."
-          main_menu(form)
+          form[:flash_msg] = 'Yeay, there are gojek drivers around you! Please choose payment method.'
+          
+          order_payment_confirm(form)
         else
           form[:flash_msg] = 'Sorry, we can not find you a gojek driver. You may try using gocar.'
           order_get_no_driver(form)
         end
       when 2
         form[:type] = 'gocar'
+        form[:est_price] = opts[:est_price_gocar]
+
         drivers = Order.check_fleet(form)
         # p drivers.first
         if !drivers.empty?
           form[:driver] = drivers.first['driver']
-          order = Order.new(form)
-          order.save!
-          form[:flash_msg] = "You order has been saved. Wait for #{form[:driver]} to pick you up."
-          main_menu(form)
+          form[:flash_msg] = 'Yeay, there are gocar drivers around you! Please choose payment method.'
+          
+          order_payment_confirm(form)
         else
-          form[:flash_msg] = 'Sorry, we can not find you a gocar driver. You may try using gojek.'
+          form[:flash_msg] = 'Sorry, we can not find you a gojek driver. You may try using gocar.'
           order_get_no_driver(form)
         end
       when 3
@@ -203,6 +205,41 @@ module GoCLI
         form[:flash_msg] = 'Wrong option entered, please retry.'
         order_get_no_driver(form)
       end
+    end
+
+    def order_payment_confirm(opts = {})
+      clear_screen(opts)
+      form = opts
+      form = View.order_payment_confirm(form)
+
+      case form[:steps].last[:option].to_i
+      when 1 # gopay
+        form[:payment_method] = 'gopay'
+
+        if form[:user].gopay < form[:est_price]
+          form[:flash_msg] = "You GoPay balance is not enough."
+          order_payment_confirm(form)
+        end
+      when 2 # cash
+        form[:payment_method] = 'cash'
+      when 3
+        main_menu(form)
+      else
+        form[:flash_msg] = 'Wrong option entered, please retry.'
+        order_payment_confirm(form)
+      end
+
+      # save order
+      order = Order.new(form)
+      order.save!
+      if form[:payment_method] == 'gopay'
+        user = User.load
+        user.debet_gopay(form[:est_price])
+        user.save!
+        form[:user] = user
+      end
+      form[:flash_msg] = "You order has been saved. Wait for #{form[:driver]} to pick you up."
+      main_menu(form)
     end
 
     def view_order_history(opts = {})
