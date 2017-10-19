@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative './models/user'
 require_relative './models/order'
 require_relative './models/location'
@@ -10,17 +12,14 @@ module GoCLI
     def registration(opts = {})
       # First, we clear everything from the screen
       clear_screen(opts)
-
       # Second, we call our View and its class method called "registration"
       # Take a look at View class to see what this actually does
       form = View.registration(opts)
-
       # This is the main logic of this method:
       # - passing input form to an instance of User class (named "user")
       # - invoke ".save!" method to user object
       # TODO: enable saving name and email
       valid_msg = User.validate(form)
-
       if !valid_msg.empty?
         form[:flash_msg] = valid_msg
         registration(form)
@@ -36,28 +35,25 @@ module GoCLI
         # Assigning form[:user] with user object
         form[:user] = user
       end
-
       # Returning the form
       form
     end
-    
+
     def login(opts = {})
       halt = false
-      while !halt
+      until halt
         clear_screen(opts)
         form = View.login(opts)
-
         # Check if user inputs the correct credentials in the login form
         if credential_match?(form[:user], form[:login], form[:password])
           halt = true
         else
-          form[:flash_msg] = 'Kombinasi Email/Nomor HP dan Password yang Anda masukkan salah'
+          form[:flash_msg] = 'Credentials doesn\'t match. Please try again'
         end
       end
-
       form
     end
-    
+
     def main_menu(opts = {})
       clear_screen(opts)
       form = View.main_menu(opts)
@@ -77,28 +73,26 @@ module GoCLI
       when 5
         exit(true)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         main_menu(form)
       end
     end
-    
+
     def view_profile(opts = {})
       clear_screen(opts)
       form = View.view_profile(opts)
 
       case form[:steps].last[:option].to_i
       when 1
-        # Step 4.1.1
         edit_profile(form)
       when 2
         main_menu(form)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         view_profile(form)
       end
     end
 
-    # TODO: Complete edit_profile method
     # This will be invoked when user choose Edit Profile menu in view_profile screen
     def edit_profile(opts = {})
       clear_screen(opts)
@@ -107,7 +101,6 @@ module GoCLI
       case form[:steps].last[:option].to_i
       when 1
         valid_msg = User.validate(form)
-        
         if !valid_msg.empty?
           form[:flash_msg] = valid_msg
           edit_profile(form)
@@ -151,8 +144,7 @@ module GoCLI
     def order_goride_confirm(opts = {})
       clear_screen(opts)
       form = opts
-      
-      form[:length] = Location.length(form[:origin_coord], form[:destination_coord])
+      form[:length] = Location.length(form[:ori_coord], form[:dest_coord])
       form[:est_price_gojek] = (form[:length] * 1500).round
       form[:est_price_gocar] = (form[:length] * 2500).round
 
@@ -163,28 +155,28 @@ module GoCLI
         form[:type] = 'gojek'
         drivers = Order.check_fleet(form)
         # p drivers.first
-        if drivers.size > 0
+        if !drivers.empty?
           form[:driver] = drivers.first['driver']
           order = Order.new(form)
           order.save!
           form[:flash_msg] = "You order has been saved. Wait for #{form[:driver]} to pick you up."
           main_menu(form)
         else
-          form[:flash_msg] = "Sorry, we can not find you a gojek driver. You may try using gocar."
+          form[:flash_msg] = 'Sorry, we can not find you a gojek driver. You may try using gocar.'
           order_get_no_driver(form)
         end
       when 2
         form[:type] = 'gocar'
         drivers = Order.check_fleet(form)
         # p drivers.first
-        if drivers.size > 0
+        if !drivers.empty?
           form[:driver] = drivers.first['driver']
           order = Order.new(form)
           order.save!
           form[:flash_msg] = "You order has been saved. Wait for #{form[:driver]} to pick you up."
           main_menu(form)
         else
-          form[:flash_msg] = "Sorry, we can not find you a gocar driver. You may try using gojek."
+          form[:flash_msg] = 'Sorry, we can not find you a gocar driver. You may try using gojek.'
           order_get_no_driver(form)
         end
       when 3
@@ -192,7 +184,7 @@ module GoCLI
       when 4
         main_menu(form)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         order_goride_confirm(form)
       end
     end
@@ -200,7 +192,6 @@ module GoCLI
     def order_get_no_driver(opts = {})
       clear_screen(opts)
       form = opts
-      
       form = View.order_get_no_driver(form)
 
       case form[:steps].last[:option].to_i
@@ -209,7 +200,7 @@ module GoCLI
       when 2
         main_menu(form)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         order_get_no_driver(form)
       end
     end
@@ -222,7 +213,7 @@ module GoCLI
       when 1
         main_menu(form)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         view_order_history(form)
       end
     end
@@ -251,41 +242,40 @@ module GoCLI
         valid_msg = User.validate_topup(form)
         if !valid_msg.empty?
           form[:flash_msg] = valid_msg
-          view_gopay(form)
         else
           user = User.load
           user.topup_gopay(form[:gopay_topup])
           user.save!
           form[:user] = user
           form.delete(:gopay_topup)
-          form[:flash_msg] = "Top Up GoPay success!"
-          view_gopay(form)
+          form[:flash_msg] = 'Top Up GoPay success!'
         end
+        view_gopay(form)
       when 2
         form.delete(:gopay_topup)
         main_menu(form)
       else
-        form[:flash_msg] = "Wrong option entered, please retry."
+        form[:flash_msg] = 'Wrong option entered, please retry.'
         top_up_gopay(form)
       end
     end
 
     protected
-      # You don't need to modify this 
-      def clear_screen(opts = {})
-        Gem.win_platform? ? (system "cls") : (system "clear")
-        if opts[:flash_msg]
-          puts opts[:flash_msg]
-          puts ''
-          opts[:flash_msg] = nil
-        end
-      end
 
-      # TODO: credential matching with email or phone
-      def credential_match?(user, login, password)
-        return false unless user.phone == login || user.email == login
-        return false unless user.password == password
-        return true
-      end
+    # You don't need to modify this
+    def clear_screen(opts = {})
+      Gem.win_platform? ? (system 'cls') : (system 'clear')
+      return false unless opts[:flash_msg]
+      puts opts[:flash_msg]
+      puts ''
+      opts[:flash_msg] = nil
+    end
+
+    # TODO: credential matching with email or phone
+    def credential_match?(user, login, password)
+      return false unless user.phone == login || user.email == login
+      return false unless user.password == password
+      true
+    end
   end
 end

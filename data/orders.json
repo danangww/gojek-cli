@@ -30,5 +30,21 @@
     "est_price": 0,
     "driver": "Rokhim",
     "type": "gojek"
+  },
+  {
+    "timestamp": "2017-10-19 13:54:49 +0700",
+    "origin": "sunter",
+    "destination": "menteng",
+    "est_price": 37500,
+    "driver": "Budi",
+    "type": "gojek"
+  },
+  {
+    "timestamp": "2017-10-19 13:55:07 +0700",
+    "origin": "sunter",
+    "destination": "menteng",
+    "est_price": 62500,
+    "driver": "Rokhimono",
+    "type": "gocar"
   }
 ]

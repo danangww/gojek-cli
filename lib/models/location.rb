@@ -1,28 +1,15 @@
-# TODO: Complete Location class
+# frozen_string_literal: true
+
 require 'json'
 require 'date'
 
 module GoCLI
-  class Point
-    attr_accessor :x, :y
-    def initialize(arr)
-      @x = arr[0]
-      @y = arr[1]
-    end
-  end
-
+  # Location class for accessing, checking, and writing to location.json file
   class Location
-    attr_accessor :name, :coord
-
-    def initialize(opts = {})
-      @name = opts[:location_name] || ''
-      @coord = opts[:location_coord] || []
-    end
-
     def self.load
-      return nil unless File.file?("#{File.expand_path(File.dirname(__FILE__))}/../../data/locations.json")
+      return nil unless File.file?("#{File.expand_path(__dir__)}/../../data/locations.json")
 
-      file = File.read("#{File.expand_path(File.dirname(__FILE__))}/../../data/locations.json")
+      file = File.read("#{File.expand_path(__dir__)}/../../data/locations.json")
       data = JSON.parse(file)
 
       data
@@ -30,19 +17,19 @@ module GoCLI
 
     def self.check(opts = {})
       form = opts
-      form.delete(:origin_coord)
-      form.delete(:destination_coord)
+      form.delete(:ori_coord)
+      form.delete(:dest_coord)
 
       load.each do |hash|
-        form[:origin_coord] = hash['coord'] if hash['name'] == form[:origin]
-        form[:destination_coord] = hash['coord'] if hash['name'] == form[:destination]
+        form[:ori_coord] = hash['coord'] if hash['name'] == form[:origin]
+        form[:dest_coord] = hash['coord'] if hash['name'] == form[:destination]
       end
 
-      (form.has_key? :origin_coord) && (form.has_key? :destination_coord) && form[:origin] != form[:destination]
+      (form.key? :ori_coord) && (form.key? :dest_coord) && form[:origin] != form[:destination]
     end
 
-    def self.length(origin, destination)
-      Math.sqrt((destination[0] - origin[0])**2 + (destination[1] - origin[1])**2)
+    def self.length(ori, dest)
+      Math.sqrt((dest[0] - ori[0])**2 + (dest[1] - ori[1])**2)
     end
   end
 end

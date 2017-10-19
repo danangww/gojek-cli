@@ -3,8 +3,8 @@
     "driver": "Budi",
     "type": "gojek",
     "location": [
-      40,
-      5
+      25,
+      25
     ]
   },
   {
@@ -75,8 +75,8 @@
     "driver": "Rokhimono",
     "type": "gocar",
     "location": [
-      40,
-      5
+      25,
+      25
     ]
   },
   {

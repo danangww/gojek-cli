@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GoCLI
   # View is a class that show menus and forms to the screen
   class View
@@ -22,7 +24,7 @@ module GoCLI
       print 'Your password: '
       form[:password] = gets.chomp
 
-      form[:steps] << {id: __method__}
+      form[:steps] << { id: __method__ }
 
       form
     end
@@ -39,7 +41,7 @@ module GoCLI
       print 'Enter your password: '
       form[:password] = gets.chomp
 
-      form[:steps] << {id: __method__}
+      form[:steps] << { id: __method__ }
 
       form
     end
@@ -58,7 +60,7 @@ module GoCLI
       puts '5. Exit'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -80,7 +82,7 @@ module GoCLI
       puts '2. Back'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -109,7 +111,7 @@ module GoCLI
       puts '2. Batal'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -124,7 +126,7 @@ module GoCLI
       Location.load.each { |hash| locations << hash['name'] }
       puts "Available route : #{locations.join(' - ')}"
       puts ''
-      
+
       print 'Your position: '
       form[:origin] = gets.chomp
 
@@ -154,7 +156,7 @@ module GoCLI
       puts '4. Kembali ke menu awal'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -175,7 +177,7 @@ module GoCLI
       puts '2. Kembali ke menu awal'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -200,7 +202,7 @@ module GoCLI
       puts "\n1. Back"
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -217,7 +219,7 @@ module GoCLI
       puts '2. Kembali ke menu utama'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
@@ -232,12 +234,11 @@ module GoCLI
 
       print 'Enter amount : '
       form[:gopay_topup] = gets.chomp
-      
       puts "\n1. Submit"
       puts '2. Batal'
 
       print 'Enter your option: '
-      form[:steps] << {id: __method__, option: gets.chomp}
+      form[:steps] << { id: __method__, option: gets.chomp }
 
       form
     end
