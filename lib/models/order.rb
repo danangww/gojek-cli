@@ -20,7 +20,7 @@ module GoCLI
       @type = opts[:type]
       @payment_method = opts[:payment_method]
       @promo_code = opts[:promo_code] || '-'
-      @discount = opts[:discount].round || 0
+      @discount = opts[:discount] || 0
     end
 
     def self.load

@@ -57,6 +57,7 @@ module GoCLI
       errors = ''
       errors += "Field amount is required\n" if form[:gopay_topup].empty?
       errors += "Field amount is not valid\n" if (form[:gopay_topup] =~ NUMBER_VALID_REGEX).nil?
+      errors += "Field amount must be positive\n" if form[:gopay_topup].to_i < 0
       errors
     end
 

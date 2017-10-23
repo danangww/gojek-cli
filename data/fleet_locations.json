@@ -27,8 +27,8 @@
     "driver": "Rokhim",
     "type": "gojek",
     "location": [
-      15,
-      35
+      10,
+      15
     ]
   },
   {
@@ -51,8 +51,8 @@
     "driver": "Budiono",
     "type": "gocar",
     "location": [
-      40,
-      5
+      20,
+      35
     ]
   },
   {

@@ -108,8 +108,8 @@ module GoCLI
       print 'Your password: '
       form[:password] = gets.chomp
 
-      puts "\n\n1. Simpan"
-      puts '2. Batal'
+      puts "\n\n1. Save"
+      puts '2. Discard'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -147,25 +147,25 @@ module GoCLI
       puts 'Order Confirmation'
       puts ''
 
-      print "Asal \t\t: #{form[:origin]}\n"
-      print "Tujuan \t\t: #{form[:destination]}\n"
-      print "Panjang Rute \t: #{form[:length]}\n"
-      print "Harga Gojek \t: #{form[:est_price_gojek]}\n"
-      print "Harga Gocar \t: #{form[:est_price_gocar]}\n"
+      print "Origin \t\t: #{form[:origin]}\n"
+      print "Destination \t: #{form[:destination]}\n"
+      print "Route Length \t: #{form[:length]}\n"
+      print "Gojek Price \t: #{form[:est_price_gojek]}\n"
+      print "Gocar Price \t: #{form[:est_price_gocar]}\n"
 
       if form.key? :discount
         print "\nPromo Code \t\t: #{form[:promo_code]}\n"
         print "Promo Type \t\t: #{form[:promo_type]}\n"
         print "Promo Value \t\t: #{form[:promo_value]} #{form[:promo_type] == 'percentage' ? '%' : ''}\n"
-        print "Harga Gojek Promo \t: #{form[:promo_gojek]}\n"
-        print "Harga Gocar Promo \t: #{form[:promo_gocar]}\n"
+        print "Gojek Promo Price \t: #{form[:promo_gojek]}\n"
+        print "Gocar Promo Price \t: #{form[:promo_gocar]}\n"
       end
 
-      puts "\n1. Pesan Gojek (Harga : #{(form.key? :promo_gojek) ? form[:promo_gojek] : form[:est_price_gojek]})"
-      puts "2. Pesan Gocar (Harga : #{(form.key? :promo_gocar) ? form[:promo_gocar] : form[:est_price_gocar]})"
-      puts '3. Masukkan kode promo / voucher'
-      puts '4. Ulangi'
-      puts '5. Kembali ke menu awal'
+      puts "\n1. Order Gojek (Harga : #{(form.key? :promo_gojek) ? form[:promo_gojek] : form[:est_price_gojek]})"
+      puts "2. Order Gocar (Harga : #{(form.key? :promo_gocar) ? form[:promo_gocar] : form[:est_price_gocar]})"
+      puts '3. Insert Promo / Voucher Code'
+      puts '4. Back to Choose Route'
+      puts '5. Back to Main Menu'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -179,22 +179,22 @@ module GoCLI
       puts 'Order Cancelled'
       puts ''
 
-      print "Asal \t\t: #{form[:origin]}\n"
-      print "Tujuan \t\t: #{form[:destination]}\n"
-      print "Panjang Rute \t: #{form[:length]}\n"
-      print "Harga Gojek \t: #{form[:est_price_gojek]}\n"
-      print "Harga Gocar \t: #{form[:est_price_gocar]}\n\n"
+      print "Origin \t\t: #{form[:origin]}\n"
+      print "Destination \t: #{form[:destination]}\n"
+      print "Route Length \t: #{form[:length]}\n"
+      print "Gojek Price \t: #{form[:est_price_gojek]}\n"
+      print "Gocar Price \t: #{form[:est_price_gocar]}\n\n"
 
       if form.key? :discount
         print "\nPromo Code \t\t: #{form[:promo_code]}\n"
         print "Promo Type \t\t: #{form[:promo_type]}\n"
         print "Promo Value \t\t: #{form[:promo_value]} #{form[:promo_type] == 'percentage' ? '%' : ''}\n"
-        print "Harga Gojek Promo \t: #{form[:promo_gojek]}\n"
-        print "Harga Gocar Promo \t: #{form[:promo_gocar]}\n"
+        print "Gojek Promo Price \t: #{form[:promo_gojek]}\n"
+        print "Gocar Promo Price \t: #{form[:promo_gocar]}\n"
       end
 
-      puts "\n1. Ulangi Pemilihan Rute"
-      puts '2. Kembali ke menu awal'
+      puts "\n1. Back to Choose Route"
+      puts '2. Back to Main Menu'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -208,14 +208,14 @@ module GoCLI
       puts 'Order Payment Confirmation'
       puts ''
 
-      print "Asal \t\t: #{form[:origin]}\n"
-      print "Tujuan \t\t: #{form[:destination]}\n"
-      print "Panjang Rute \t: #{form[:length]}\n"
-      print "Armada \t\t: #{form[:type]}\n"
-      print "Harga \t\t: #{form[:est_price]}\n\n"
+      print "Origin \t\t: #{form[:origin]}\n"
+      print "Destination \t: #{form[:destination]}\n"
+      print "Route Length \t: #{form[:length]}\n"
+      print "Fleet Type \t: #{form[:type]}\n"
+      print "Price \t\t: #{form[:est_price]}\n\n"
 
       puts "1. Via GoPay (Balance : #{form[:user].gopay})"
-      puts "2. Cash / Tunai"
+      puts "2. Cash"
       puts '3. Cancel Order'
 
       print 'Enter your option: '
@@ -248,13 +248,13 @@ module GoCLI
       Order.load.each_with_index do |order, index|
         puts "##{index + 1}"
         puts "Timestamp \t: #{order['timestamp']}"
-        puts "Asal \t\t: #{order['origin']}"
-        puts "Tujuan \t\t: #{order['destination']}"
-        puts "Harga \t\t: #{order['est_price']}"
+        puts "Origin \t\t: #{order['origin']}"
+        puts "Destination \t: #{order['destination']}"
+        puts "Price \t\t: #{order['est_price']}"
         puts "Promo Code \t: #{order['promo_code']}"
         puts "Discount \t: #{order['discount']}"
         puts "Payment \t: #{order['payment_method']}"
-        puts "Armada \t\t: #{order['type']}"
+        puts "Fleet Type\t: #{order['type']}"
         puts "Driver \t\t: #{order['driver']}\n\n"
       end
 
@@ -296,7 +296,7 @@ module GoCLI
       print "GoPay Balance \t: #{form[:user].gopay}\n\n"
 
       puts "\n1. Top Up"
-      puts '2. Kembali ke menu utama'
+      puts '2. Back to Main Menu'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }
@@ -315,7 +315,7 @@ module GoCLI
       print 'Enter amount : '
       form[:gopay_topup] = gets.chomp
       puts "\n1. Submit"
-      puts '2. Batal'
+      puts '2. Cancel'
 
       print 'Enter your option: '
       form[:steps] << { id: __method__, option: gets.chomp }

@@ -53,5 +53,38 @@
     "payment_method": "cash",
     "promo_code": "GODIR",
     "discount": 1500
+  },
+  {
+    "timestamp": "2017-10-20 10:46:23 +0700",
+    "origin": "blok m",
+    "destination": "kemang",
+    "est_price": 7500,
+    "driver": "Rokhim",
+    "type": "gojek",
+    "payment_method": "gopay",
+    "promo_code": "-",
+    "discount": 0
+  },
+  {
+    "timestamp": "2017-10-20 10:48:56 +0700",
+    "origin": "sunter",
+    "destination": "kemang",
+    "est_price": 76618,
+    "driver": "Budiono",
+    "type": "gocar",
+    "payment_method": "gopay",
+    "promo_code": "GOPER",
+    "discount": 13520.75
+  },
+  {
+    "timestamp": "2017-10-20 11:38:25 +0700",
+    "origin": "kemang",
+    "destination": "taman anggrek",
+    "est_price": 33541,
+    "driver": "Rokhim",
+    "type": "gojek",
+    "payment_method": "cash",
+    "promo_code": "-",
+    "discount": 0
   }
 ]

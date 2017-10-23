@@ -49,7 +49,7 @@ module GoCLI
         if credential_match?(form[:user], form[:login], form[:password])
           halt = true
         else
-          form[:flash_msg] = 'Credentials doesn\'t match. Please try again'
+          form[:flash_msg] = 'Credentials doesn\'t match. Please try again.'
         end
       end
       form
